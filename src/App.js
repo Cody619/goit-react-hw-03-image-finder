@@ -6,11 +6,7 @@ import Loader from 'react-loader-spinner'
 import queryString from 'query-string'
 import { ImageGallery } from './components/ImageGallery'
 import { Button } from './components/Button'
-
-const api_key = '24139872-fead068626907a7ba14cf06e1'
-const base_URL = 'https://pixabay.com/api/'
-
-axios.defaults.baseURL = base_URL
+import { api_key } from './components/Services'
 
 class App extends Component {
   state = {
