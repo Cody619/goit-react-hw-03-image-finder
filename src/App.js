@@ -1,12 +1,10 @@
 import './App.css'
-import axios from 'axios'
 import { Searchbar } from './components/Searchbar'
 import { Component } from 'react'
 import Loader from 'react-loader-spinner'
-import queryString from 'query-string'
 import { ImageGallery } from './components/ImageGallery'
 import { Button } from './components/Button'
-import { api_key } from './components/Services'
+import { getImages } from './services/api'
 
 class App extends Component {
   state = {
@@ -23,16 +21,7 @@ class App extends Component {
     })
     this.currentPage += 1
 
-    const params = queryString.stringify({
-      key: api_key,
-      q: this.lastSearchText,
-      page: this.currentPage,
-      per_page: 12,
-      image_type: 'photo',
-      orientation: 'horizontal',
-    })
-
-    axios.get('?' + params).then((response) => {
+    getImages(this.currentPage, this.lastSearchText).then((response) => {
       this.setState(
         (state) => {
           return {
@@ -57,16 +46,7 @@ class App extends Component {
     this.currentPage = 1
     this.lastSearchText = searchText
 
-    const params = queryString.stringify({
-      key: api_key,
-      q: searchText,
-      pege: 1,
-      per_page: 12,
-      image_type: 'photo',
-      orientation: 'horizontal',
-    })
-
-    axios.get('?' + params).then((response) => {
+    getImages(this.currentPage, searchText).then((response) => {
       this.setState({
         isLoading: false,
         imgs: response.data.hits,
